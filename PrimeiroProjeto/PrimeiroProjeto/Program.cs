@@ -2,9 +2,9 @@
 string mensagemDeBoasVindas = "Boas vindas ao Screen Sound";
 //List<string> listaDasBandas = new List<string> { "U2", "The Beatles", "Calypso" };
 
-Dictionary<string, List<int>> bandasEAsuasNotas = new Dictionary<string, List<int>>();
-bandasEAsuasNotas.Add("U2", new List<int> { 10, 9, 8 });
-bandasEAsuasNotas.Add("The Beatles", new List<int>());
+Dictionary<string, List<decimal>> bandasEAsuasNotas = new Dictionary<string, List<decimal>>();
+bandasEAsuasNotas.Add("U2", new List<decimal> { 10, 9, 8 });
+bandasEAsuasNotas.Add("The Beatles", new List<decimal>());
 void ExibirLogo()
 {
     Console.WriteLine(@"
@@ -44,7 +44,7 @@ void ExibirOpcoesDoMenu()
             AvaliarBanda();
             break;
         case 4:
-            Console.WriteLine("Você escolheu a opção " + opcaoEscolhidaNumerica);
+            ExibirMediaAvaliacaoBanda();
             break;
         case -1:
             Console.WriteLine("Fechando programa...s");
@@ -61,7 +61,7 @@ void RegistrarBanda()
     ExibirTituloDaOpcao("Registro de Bandas");
     Console.Write("Digite o nome da banda que deseja registrar: ");
     string nomeDaBanda = Console.ReadLine()!;
-    bandasEAsuasNotas.Add(nomeDaBanda, new List<int>());
+    bandasEAsuasNotas.Add(nomeDaBanda, new List<decimal>());
     Console.WriteLine($"A banda {nomeDaBanda} foi registrada com sucesso!");
     Thread.Sleep(2000); // Pausa de 2 segundos
     Console.Clear();
@@ -102,15 +102,16 @@ void AvaliarBanda()
     //se a banda existir, atribuir nota
     ExibirTituloDaOpcao("Avaliar Banda");
     Console.WriteLine("Digite o nome da banda que deseja avaliar: ");
-    string nomeBanda = Console.ReadLine();
+    string? nomeBanda = Console.ReadLine();
 
-    if (bandasEAsuasNotas.ContainsKey(nomeBanda))
+    if (!string.IsNullOrWhiteSpace(nomeBanda) && bandasEAsuasNotas.ContainsKey(nomeBanda))
     {
         Console.WriteLine($"Qual a nota que a banda {nomeBanda} merece: ");
-        decimal nota = decimal.Parse(Console.ReadLine()!);
-        if (nota >= 0 && nota <= 10)
+        string? entradaNota = Console.ReadLine();
+
+        if (decimal.TryParse(entradaNota, out decimal nota) && nota >= 0 && nota <= 10)
         {
-            bandasEAsuasNotas[nomeBanda].Add((int)nota);
+            bandasEAsuasNotas[nomeBanda].Add(nota);
             Console.WriteLine($"A nota {nota} foi registrada com sucesso para a banda {nomeBanda}!");
             Console.WriteLine("Digite uma tecla para voltar ao menu");
             Console.ReadKey();
@@ -119,7 +120,7 @@ void AvaliarBanda()
         }
         else
         {
-            Console.WriteLine("A nota deve ser entre 0 e 10");
+            Console.WriteLine("A nota deve ser um número entre 0 e 10");
             Thread.Sleep(2000);
             Console.Clear();
             ExibirOpcoesDoMenu();
@@ -133,6 +134,57 @@ void AvaliarBanda()
         Console.Clear();
         ExibirOpcoesDoMenu();
     }
+
+}
+
+void ExibirMediaAvaliacaoBanda() {
+
+    ExibirTituloDaOpcao("Avaliação das Bandas: ");
+    Console.WriteLine("Gostaria de ver uma banda em especifica? Digite o nome dela ou tecle enter para ver todas: ");
+    string? nomeBanda = Console.ReadLine();
+
+    if (!string.IsNullOrWhiteSpace(nomeBanda))
+    {
+        if (bandasEAsuasNotas.ContainsKey(nomeBanda))
+        {
+            List<decimal> notas = bandasEAsuasNotas[nomeBanda];
+            if (notas == null || notas.Count == 0)
+            {
+                Console.WriteLine($"Banda: {nomeBanda}    Média: - (sem avaliações)");
+            }
+            else
+            {
+                decimal media = notas.Average();
+                Console.WriteLine($"Banda: {nomeBanda}    Média: {media:F1}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"A banda {nomeBanda} não foi encontrada");
+        }
+    }
+    else
+    {
+        foreach (string banda in bandasEAsuasNotas.Keys)
+        {
+
+            List<decimal> notas = bandasEAsuasNotas[banda];
+            if (notas == null || notas.Count == 0)
+            {
+                Console.WriteLine($"Banda: {banda}    Média: - (sem avaliações)");
+            }
+            else
+            {
+                decimal media = notas.Average();
+                Console.WriteLine($"Banda: {banda}    Média: {media:F1}");
+            }
+        }
+    }
+
+    Console.WriteLine("Digite uma tecla para voltar ao menu");
+    Console.ReadKey();
+    Console.Clear();
+    ExibirOpcoesDoMenu();
 
 }
 
