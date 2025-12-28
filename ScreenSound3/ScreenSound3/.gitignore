@@ -1,0 +1,79 @@
+# Build results
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+project.lock.json
+
+# Publish outputs
+publish/
+*.Publish.xml
+
+# Runtime files
+*.deps.json
+*.runtimeconfig.json
+
+# Test results and coverage
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+*.trx
+
+# Logs and databases
+*.log
+*.db
+
+# User-specific files
+*.userprefs
+*.user
+*.suo
+*.DotSettings.user
+
+# Resharper
+_ReSharper*/
+*._ReSharper*/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Local settings
+.local.settings.json
+
+# Secrets
+secrets.json
+secrets.*.json
+
+# Packages folder (if using packagerestore)
+packages/
+
+# Temporary files
+*.tmp
+*.temp
+
+# npm
+node_modules/
+
+# Ignore compiled Python files (if any)
+__pycache__/
+*.py[cod]
