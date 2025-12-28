@@ -1,2 +1,2 @@
-# alura-CSharp-studies
-Repositório com foco voltado ao aprofundamento e desafios da linguagem C#
+# C# cp, Orientação a Objetos
+Repositório com foco voltado ao aprofundamento na linguagem C# por meio da formação C# e Orientação a Objetos da Alura.
